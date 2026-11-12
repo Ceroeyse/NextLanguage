@@ -1,0 +1,37 @@
+{
+  "name": "nextlanguage",
+  "version": "2.0.0",
+  "description": "The JavaScript interpreter for NextLanguage",
+  "main": "NextLanguage-Source/package/start.js",
+  "scripts": {
+    "github": "node NextLanguage-Source/github-build.js",
+    "debug": "node NextLanguage-Source/run-debug.js",
+    "build": "node NextLanguage-Source/app.js",
+    "activate": "node NextLanguage-Source/app.js",
+    "start": "node NextLanguage-Source/init.js",
+    "test": "jest --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ceroeyse/NextLanguage.git"
+  },
+  "keywords": [
+    "NextLanguage",
+    "NXL",
+    "Next",
+    "Language",
+    "nx"
+  ],
+  "author": "Nxium Developments",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ceroeyse/NextLanguage/issues"
+  },
+  "homepage": "https://github.com/Ceroeyse/NextLanguage#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

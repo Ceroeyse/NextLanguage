@@ -1,11 +1,10 @@
 const path = require('path');
 
-const compiler = require('../../interpreter.js');
-const addOutput = require('../../../modules/functions/addOutput.js');
+const run = require('../../start.js');
+const addOutput = require('../../../build/lib/output/addOutput.js');
 
 const Packages = require('../../../modules/class/Packages.js');
 const Debug = require('../../../modules/class/Debug.js');
-const { readFileSync } = require('fs');
 
 const debug = new Debug;
 const package = new Packages;
@@ -35,13 +34,7 @@ async function startDebug(file, value) {
 
     if (active === true) {
         addOutput('Debugging is enabled');
-        // All possible debug files.
-        // Output the contents of a variable: ./function/outputVariables.debug
-        const debugCode = readFileSync(path.join(__dirname, file), 'utf8');
-    
-        // Parse and execute the NXL code
-        const lines = debugCode.split("\n").map(line => line.trim());
-        compiler(lines);
+        await run(path.join(__dirname, file));
     } else {
         addOutput('Debugging is disabled');
     }
