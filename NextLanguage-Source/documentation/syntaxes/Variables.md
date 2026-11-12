@@ -37,11 +37,4 @@
   @var [decimal_percent]: (percent)0.9
   ```
 
-#### `:call` with Variables
-- **Definition**: Calls a variable and optionally modifies its behavior.
-- **Syntax**: `:call [@var:<option>]: /name@output`
-- **Example**:
-  ```
-  :call [@var:false]: /decimal_percent@output
-  ```
-
+Use `@output name` to print the value of a variable.

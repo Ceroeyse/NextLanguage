@@ -70,3 +70,33 @@
   :set [@variable]: /raining(true);
   ```
 
+
+Call a function with `@call :function[say_abc]`. To give a function parameters, declare them as the first line of its body:
+
+```text
+@function [greet]:
+    :params [name]
+    @output name
+@end
+@call :function[greet]("Someone")
+```
+
+#### Loops
+
+```text
+@for [i] in [1..3]:
+    @output i
+@end
+
+@var [remaining]: (integer)2
+@while [remaining > 0]:
+    @output remaining
+    :set [@variable]: /remaining(remaining - 1)
+@end
+```
+
+A for range includes both endpoints when the step reaches the endpoint. Use `[1..9 step 2]` to specify a positive step.
+
+#### Imports and exports
+
+Use `:packages greet @export` after defining the function to export it. In a different file, write `:packages greet @import ./helpers.nxl` to make it available as `@call :function[greet]`. Use `:packages null @import ./helpers.nxl` to run the imported file without binding a function.

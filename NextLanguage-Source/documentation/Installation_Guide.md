@@ -1,18 +1,15 @@
-## Installation Tutorial
-How to install this language? Well, let me walk you through it.
+# Installing and running NextLanguage
 
-**Recommended Setup**<br>
-For our recommendation if you're just starting out to code and found your way to our coding language, we recommend you install [VSCode](https://code.visualstudio.com/) to help you start your coding jounery. [VSCode](https://code.visualstudio.com/) is a free coding software that has many features to help and guide your coding jounery.
+Download the [stable release](https://github.com/Ceroeyse/NextLanguage/releases/latest) and extract it. Open a terminal at the repository root, where `package.json` is located. The JavaScript interpreter requires Node.js 22 or newer and has no runtime dependencies.
 
-We're currently working on releasing our own vscode extension for this very Language. So when that releases check on our [Twitter](https://x.com/NxiumUpdates) for updates.
+| Command | Result |
+| --- | --- |
+| `npm run build` | Creates a starter program if needed, writes the main file path, and runs the program. |
+| `npm run build -- "my project/main.nxl"` | Creates or selects the specified main file and runs it. Existing source is preserved. |
+| `npm start` | Runs the program named in `main.config.file`. |
+| `npm start -- path/to/file.nxl` | Runs the specified file for this invocation. |
+| `npm run debug` | Runs the bundled NXL examples for variables, conditions, and functions. |
 
-## How to install NextLanguage
+An existing `PACKAGES: @main path/to/file.nxl` entry in `package.config.val` supplies the main path when `main.config.file` is empty. Add `PACKAGES: @others path/to/file.nxl` for each additional script to run after the main script. Configured paths resolve from the project directory. Imports in NXL scripts resolve from the importing file.
 
-**Step 1**: Download the latest version of NextLanguage from [here](https://github.com/Nxium-Developments/NextLanguage/releases/latest)<br><br>
-**Step 2**: Make sure you have [NodeJS](https://nodejs.org/en/download/package-manager) and [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed. If you just installed NodeJS, don't worry there is an option for you to install NPM along with NodeJS as NPM doesn't have an official download link.<br><br>
-**Step 3**: Once you have both the latest release of [NextLanguage](https://github.com/Nxium-Developments/NextLanguage) downloaded and [NodeJS](https://nodejs.org/en/download/package-manager) is now installed, extract the archive and open the `NextLanguage` folder.<br><br>
-**Step 4**: Run `npm run build` to install and build your NextLanguage Project.<br>
-
----
-
-Once running `npm run build` it should automatically run the project, but if you want to start the project that has already been bulit just run `npm run rebuild` to start the project instead of rebuilding the entire project.
+To use the CLI directly, run `node NextLanguage-Source/cli.js --help`.

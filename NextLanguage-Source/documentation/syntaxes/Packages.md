@@ -22,17 +22,8 @@
   :package-com x-auto;
   ```
 
-#### `:package-advanced`
-- **Definition**: Specifies whether to execute advanced code languages.
-- **Syntax**: `:package-advanced true;`
-  - Argument: `true` or `false`
-- **Example**:
-  ```
-  :package-advanced true; # Enables advanced code execution.
-  ```
-
 #### `:packaged`
-- **Definition**: Contains the block of advanced code to be executed.
+- **Definition**: Groups NXL statements for execution.
 - **Syntax**:
   ```
   :packaged [
@@ -45,3 +36,5 @@
       @output Hello World
   ];
   ```
+
+The older `:package-main`, `:package-com x-auto`, and `:package-advanced` directives are accepted for compatibility. Set the main file in `main.config.file`.
