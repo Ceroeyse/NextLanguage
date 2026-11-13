@@ -1,0 +1,36 @@
+name: Odin parity
+
+on:
+  push:
+    branches: [main, v3.0-dev]
+    paths:
+      - 'odin/**'
+      - 'NextLanguage-Source/**'
+      - '.github/workflows/odin-parity.yml'
+  pull_request:
+    paths:
+      - 'odin/**'
+      - '.github/workflows/odin-parity.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download and verify Odin
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location \
+            https://github.com/odin-lang/Odin/releases/download/dev-2026-11a/odin-linux-amd64-dev-2026-11a.tar.gz \
+            --output "$RUNNER_TEMP/odin.tar.gz"
+          printf '65c9f6e97d6f8a30930e151f270ce5aeaa98fe8b2ba49fe067394e2af04f7618  %s/odin.tar.gz\n' "$RUNNER_TEMP" | sha256sum -c
+          mkdir "$RUNNER_TEMP/odin"
+          tar -xzf "$RUNNER_TEMP/odin.tar.gz" --strip-components=1 -C "$RUNNER_TEMP/odin"
+          echo "$RUNNER_TEMP/odin" >> "$GITHUB_PATH"
+      - run: sh odin/tests/compare.sh

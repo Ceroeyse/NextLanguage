@@ -1,0 +1,12 @@
+# Programs in this fixture run on both implementations.
+@output Hello, NextLanguage;
+@variable [name]: "NextLanguage \u2600";
+@var [ready]: (boolean)false
+@var [count]: (int)-12
+@output name
+@output ready
+@output count
+@var [count]: (integer)22;
+:output count
+@output 'It\'s working'
+@output "An escaped \"quote\""

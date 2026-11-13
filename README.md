@@ -22,3 +22,7 @@ npm ci
 npm test
 npm run github
 ```
+
+## Odin migration
+
+The v3.0 branch includes a native Odin CLI for an initial subset of NXL. See the [Odin migration guide](odin/README.md) for supported commands, build instructions, and the JavaScript parity check.
