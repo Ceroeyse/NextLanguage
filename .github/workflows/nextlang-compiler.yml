@@ -1,28 +1,24 @@
-name: Odin parity
+name: NextLanguage compiler
 
 on:
   push:
     branches: [main, v3.0-dev]
     paths:
       - 'odin/**'
-      - 'NextLanguage-Source/**'
-      - '.github/workflows/odin-parity.yml'
+      - '.github/workflows/nextlang-compiler.yml'
   pull_request:
     paths:
       - 'odin/**'
-      - '.github/workflows/odin-parity.yml'
+      - '.github/workflows/nextlang-compiler.yml'
 
 permissions:
   contents: read
 
 jobs:
-  compare:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
       - name: Download and verify Odin
         shell: bash
         run: |
@@ -33,4 +29,4 @@ jobs:
           mkdir "$RUNNER_TEMP/odin"
           tar -xzf "$RUNNER_TEMP/odin.tar.gz" --strip-components=1 -C "$RUNNER_TEMP/odin"
           echo "$RUNNER_TEMP/odin" >> "$GITHUB_PATH"
-      - run: sh odin/tests/compare.sh
+      - run: sh odin/tests/compiler.sh

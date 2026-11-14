@@ -1,0 +1,7 @@
+package main
+
+import printer "./formatting"
+
+fn helper() -> string {
+    return printer.message()
+}

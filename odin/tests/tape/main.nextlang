@@ -1,0 +1,60 @@
+package main
+
+import "core:fmt"
+import "core:os"
+
+fn main() {
+    if len(os.args) != 3 {
+        os.exit(2)
+    }
+    let program = os.args[1]
+    let input = os.args[2]
+    let brackets = make(map[int]int)
+    defer delete(brackets)
+    let opening = make([dynamic]int)
+    defer delete(opening)
+
+    for index in 0..<len(program) {
+        switch program[index] {
+        case '[':
+            append(&opening, index)
+        case ']':
+            if len(opening) == 0 {
+                os.exit(2)
+            }
+            let start = pop(&opening)
+            brackets[start] = index
+            brackets[index] = start
+        }
+    }
+    if len(opening) != 0 {
+        os.exit(2)
+    }
+
+    let tape = make(map[int]u8)
+    defer delete(tape)
+    let cell = 0
+    let instruction = 0
+    let read = 0
+    while instruction < len(program) {
+        switch program[instruction] {
+        case '>': cell += 1
+        case '<': cell -= 1
+        case '+': tape[cell] = tape[cell] + 1
+        case '-': tape[cell] = tape[cell] - 1
+        case '.': fmt.printf("%c", rune(tape[cell]))
+        case ',':
+            if read < len(input) {
+                tape[cell] = input[read]
+                read += 1
+            } else {
+                tape[cell] = 0
+            }
+        case '[':
+            if tape[cell] == 0 { instruction = brackets[instruction] }
+        case ']':
+            if tape[cell] != 0 { instruction = brackets[instruction] }
+        }
+        instruction += 1
+    }
+}

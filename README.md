@@ -23,6 +23,6 @@ npm test
 npm run github
 ```
 
-## Odin migration
+## v3.0 native compiler
 
-The v3.0 branch includes a native Odin CLI for an initial subset of NXL. See the [Odin migration guide](odin/README.md) for supported commands, build instructions, and the JavaScript parity check.
+The development branch compiles `.nextlang` packages to native executables and can import Odin's standard library directly. See the [compiler guide](odin/README.md) for installation, syntax, imports, and optimization modes.

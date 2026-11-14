@@ -1,0 +1,9 @@
+package formatting
+
+import "core:strings"
+import calc "../numbers"
+
+fn message() -> string {
+    assert(calc.factorial(3) == 6)
+    return strings.trim_space("  multi-file modules  ")
+}

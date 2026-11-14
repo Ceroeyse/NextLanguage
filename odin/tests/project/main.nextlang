@@ -1,0 +1,38 @@
+package main
+
+import display "core:fmt"
+import "core:strings"
+import "./numbers"
+
+fn main() {
+    let total: int = 0
+    let index = 0
+    while index < 6 {
+        if index % 2 == 0 {
+            total += index
+        } else {
+            total -= 1
+        }
+        index += 1
+    }
+
+    let buffer = make([dynamic]int)
+    defer delete(buffer)
+    for value in 0..<5 {
+        append(&buffer, numbers.factorial(value))
+    }
+
+    let message = "fn let while import"
+    // while, let, and fn in comments and string literals must survive lowering.
+    display.println(strings.to_upper(message))
+    display.println(buffer[len(buffer) - 1], total, helper())
+    when ODIN_OPTIMIZATION_MODE == .Speed {
+        display.println("speed")
+    } else when ODIN_OPTIMIZATION_MODE == .Size {
+        display.println("size")
+    } else when ODIN_OPTIMIZATION_MODE == .None {
+        display.println("none")
+    } else {
+        display.println("unexpected optimization")
+    }
+}
