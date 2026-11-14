@@ -1,0 +1,29 @@
+package main
+
+import "core:fmt"
+
+fn hello() {
+    fmt.println("Hello")
+}
+
+fn number_ten() {
+    fmt.println("number 1")
+    fmt.println("number 10")
+}
+
+fn one() {
+    fmt.println(1)
+}
+
+fn main() {
+    hello()
+    number_ten()
+    one()
+
+    fmt.println("If the following output were sent in this order:")
+    fmt.println("#: Hello")
+    fmt.println("#: number 1")
+    fmt.println("#: number 10")
+    fmt.println("#: 1")
+    fmt.println("Then the following file: functionState.debug has been sucessfully ran.")
+}

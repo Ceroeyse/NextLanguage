@@ -7,7 +7,12 @@ import "core:path/filepath"
 import "core:strconv"
 import "core:strings"
 
-lower_source :: proc(project: ^Project, filename, source: string) -> (string, bool) {
+Source_Edit :: struct {
+    source_start, source_end: int,
+    generated_start, generated_end: int,
+}
+
+lower_source :: proc(project: ^Project, filename, source: string) -> (string, []Source_Edit, bool) {
     lexer: tokenizer.Tokenizer
     tokenizer.init(&lexer, source, filename)
     lexer.flags = {.Insert_Semicolon}
@@ -23,11 +28,12 @@ lower_source :: proc(project: ^Project, filename, source: string) -> (string, bo
         }
     }
     if lexer.error_count != 0 {
-        return "", false
+        return "", nil, false
     }
 
     result := strings.builder_make()
     cursor := 0
+    edits: [dynamic]Source_Edit
     previous: tokenizer.Token_Kind
     for token, index in tokens {
         begin := token.pos.offset
@@ -46,18 +52,18 @@ lower_source :: proc(project: ^Project, filename, source: string) -> (string, bo
                     if !os.is_directory(import_dir) {
                         fmt.eprintfln("%s:%d:%d: Next package directory not found: %s",
                             filename, path.pos.line, path.pos.column, decoded)
-                        return "", false
+                        return "", nil, false
                     }
                     if strings.contains(path.text, "\n") || strings.contains(path.text, "\r") {
                         fmt.eprintfln("%s:%d:%d: Next package paths must be on one line",
                             filename, path.pos.line, path.pos.column)
-                        return "", false
+                        return "", nil, false
                     }
                     canonical, err := os.get_absolute_path(import_dir, context.allocator)
                     if err != nil {
                         fmt.eprintfln("%s:%d:%d: Unable to resolve Next package %s: %v",
                             filename, path.pos.line, path.pos.column, decoded, err)
-                        return "", false
+                        return "", nil, false
                     }
                     name, _ := add_package(project, canonical)
                     begin = path.pos.offset
@@ -92,11 +98,13 @@ lower_source :: proc(project: ^Project, filename, source: string) -> (string, bo
 
         if replacement != "" && begin >= cursor {
             strings.write_string(&result, source[cursor:begin])
+            generated_start := len(strings.to_string(result))
             strings.write_string(&result, replacement)
+            append(&edits, Source_Edit{begin, end, generated_start, generated_start + len(replacement)})
             cursor = end
         }
         previous = token.kind
     }
     strings.write_string(&result, source[cursor:])
-    return strings.to_string(result), true
+    return strings.to_string(result), edits[:], true
 }

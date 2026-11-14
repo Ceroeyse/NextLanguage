@@ -1,0 +1,25 @@
+package main
+
+import "core:fmt"
+
+fn main() {
+    let percentage: f64 = 0.11
+    let x: int = 11
+    let username = "Someone"
+    let negative: int = -10
+    let decimal: f64 = 0.1
+
+    fmt.println(decimal)
+    fmt.println(negative)
+    fmt.println(username)
+    fmt.println(x)
+    fmt.printfln("%.0f%%", percentage * 100)
+
+    fmt.println("If the following outputs were sent in this order:")
+    fmt.println("#: 0.1")
+    fmt.println("#: -10")
+    fmt.println("#: Someone")
+    fmt.println("#: 11")
+    fmt.println("#: 11%")
+    fmt.println("Then the following file: outputVariables.debug has been sucessfully ran")
+}

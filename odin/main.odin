@@ -118,7 +118,7 @@ compile :: proc(options: Options) -> int {
     }
     defer os.remove_all(workspace)
 
-    project := Project{workspace = workspace, packages = make(map[string]int), sources = make(map[string]string)}
+    project := Project{workspace = workspace, packages = make(map[string]int), sources = make(map[string]Source_File)}
     _, staged_dir := add_package(&project, filepath.dir(entry))
     if !stage_project(&project, entry) {
         return 1
@@ -130,7 +130,7 @@ compile :: proc(options: Options) -> int {
     }
     collection := fmt.aprintf("-collection:nextlang_project=%s", workspace)
     args: [dynamic]string
-    append(&args, backend, "build", staged_dir, collection, "-error-pos-style:unix")
+    append(&args, backend, "build", staged_dir, collection, "-json-errors")
     executable_name :: "program.exe" when ODIN_OS == .Windows else "program"
     temporary_output, _ := filepath.join({workspace, executable_name})
     if options.check {
@@ -148,7 +148,7 @@ compile :: proc(options: Options) -> int {
         os.write(os.stdout, stdout)
     }
     if len(stderr) > 0 {
-        os.write_string(os.stderr, remap_diagnostics(&project, string(stderr)))
+        render_diagnostics(&project, string(stderr))
     }
     if !state.success || state.exit_code != 0 {
         return 1

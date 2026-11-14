@@ -5,10 +5,12 @@ on:
     branches: [main, v3.0-dev]
     paths:
       - 'odin/**'
+      - 'NextLanguage-Source/**'
       - '.github/workflows/nextlang-compiler.yml'
   pull_request:
     paths:
       - 'odin/**'
+      - 'NextLanguage-Source/**'
       - '.github/workflows/nextlang-compiler.yml'
 
 permissions:
@@ -18,7 +20,10 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
       - name: Download and verify Odin
         shell: bash
         run: |

@@ -54,3 +54,7 @@ sh odin/tests/compiler.sh
 ```
 
 The tests build and run recursive and iterative programs, check standard-library and multi-file imports, and verify all three optimization modes. A sparse-tape interpreter exercises loops, mutable indexed storage, and data-dependent branching. Negative cases cover type errors, cyclic imports, and the v2 file extension.
+
+## v2 migration examples
+
+The [variables](examples/variables/main.nextlang), [conditionals](examples/conditionals/main.nextlang), and [functions](examples/functions/main.nextlang) examples are ports of the bundled v2 debug programs. The compiler tests use Node.js 22 or newer to run the v2 originals and compare their standard output byte for byte with the native executables.

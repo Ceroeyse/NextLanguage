@@ -4,13 +4,12 @@ import "core:fmt"
 import "core:os"
 import "core:path/filepath"
 import "core:slice"
-import "core:strings"
 
 Project :: struct {
     workspace: string,
     packages: map[string]int,
     pending: [dynamic]string,
-    sources: map[string]string,
+    sources: map[string]Source_File,
 }
 
 add_package :: proc(project: ^Project, path: string) -> (name, directory: string) {
@@ -73,7 +72,7 @@ stage_file :: proc(project: ^Project, filename, staged_file: string) -> bool {
         fmt.eprintfln("%s: unable to read source: %v", filename, read_error)
         return false
     }
-    translated, ok := lower_source(project, filename, string(source))
+    translated, edits, ok := lower_source(project, filename, string(source))
     if !ok {
         return false
     }
@@ -81,19 +80,12 @@ stage_file :: proc(project: ^Project, filename, staged_file: string) -> bool {
         fmt.eprintfln("%s: unable to stage source: %v", filename, err)
         return false
     }
-    project.sources[staged_file] = filename
+    original := Source_File{filename, string(source), edits}
+    project.sources[staged_file] = original
     if cwd, err := os.get_working_directory(context.allocator); err == nil {
         if relative, relative_error := filepath.rel(cwd, staged_file); relative_error == nil {
-            project.sources[relative] = filename
+            project.sources[relative] = original
         }
     }
     return true
-}
-
-remap_diagnostics :: proc(project: ^Project, diagnostics: string) -> string {
-    rendered := diagnostics
-    for staged, original in project.sources {
-        rendered, _ = strings.replace_all(rendered, staged, original)
-    }
-    return rendered
 }

@@ -1,0 +1,62 @@
+package main
+
+import "core:fmt"
+
+fn main() {
+    let percentage: f64 = 0.11
+    let x: int = 11
+    let decimal: f64 = 0.1
+    let ready = true
+
+    if x > 10 {
+        fmt.println("x is greater than 10")
+    } else {
+        fmt.println("x is not greater than 10")
+    }
+
+    if x == 11 {
+        fmt.println("x is equal to 11")
+    } else {
+        fmt.println("x is not equal to 11")
+    }
+
+    if x < 9 {
+        fmt.println("x is smaller than 9")
+    } else {
+        fmt.println("x is bigger than 9")
+    }
+
+    if percentage == 0.11 {
+        fmt.println("percentage is equal to 11%")
+    } else {
+        fmt.println("percentage isn't equal to 11%")
+    }
+
+    if ready {
+        fmt.println("boolean is true")
+    } else {
+        fmt.println("boolean is false")
+    }
+
+    if decimal == 0.1 {
+        fmt.println("decimal is equal to 0.1")
+    } else {
+        fmt.println("decimal isn't equal to 0.1")
+    }
+
+    if decimal > 0.1 {
+        fmt.println("decimal is greater than 0.1")
+    } else {
+        fmt.println("decimal isn't greater than 0.1")
+    }
+
+    if decimal < 0.1 {
+        fmt.println("decimal is smaller than 0.1")
+    } else {
+        fmt.println("decimal is bigger than 0.1")
+    }
+
+    if ready {
+        fmt.println("this can only be true")
+    }
+}
